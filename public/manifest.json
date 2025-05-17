@@ -4,7 +4,7 @@
   "manifest_version": 1,
   "action": {
     "title": "Countdown",
-    "icon": "/vite.svg",
+    "icon": "/timer.svg",
     "popover": "/",
     "height": 600,
     "width": 270

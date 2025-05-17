@@ -9,16 +9,18 @@ import {
   millisecondsToTime,
 } from "./utils";
 
+const DEFAULT_TIME = {
+  hours: 0,
+  minutes: 0,
+  seconds: 0,
+};
+
 export function NewTimer({
   onCreate: onCreate,
 }: {
   onCreate: (countdown: Countdown) => void;
 }) {
-  const [time, setTime] = useState<Time>({
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
+  const [time, setTime] = useState<Time>(DEFAULT_TIME);
 
   return (
     <div className="h-full w-full space-y-3 rounded-xl">
@@ -80,6 +82,7 @@ export function NewTimer({
               pausedAt: null,
               addedTime: 0,
             });
+            setTime(DEFAULT_TIME);
           }}
         >
           Start Timer
@@ -99,7 +102,7 @@ function Input({
   unit: string;
 }) {
   return (
-    <div className="focus-within:ring-primary dark:focus-within:ring-primary-dark flex items-center rounded-xl border-1 border-white/20 pr-2 outline-none focus-within:ring-2">
+    <div className="focus-within:ring-primary dark:focus-within:ring-primary-dark flex items-center rounded-xl border-1 border-black/20 pr-2 outline-none focus-within:ring-2 dark:border-white/20">
       <PartiallyControlledInput
         clearContentOnFocus
         className="w-full p-2 pr-0 outline-none"

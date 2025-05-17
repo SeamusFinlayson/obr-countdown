@@ -92,9 +92,9 @@ export function Timer({
   const displayString = timeToString(displayTime);
 
   return (
-    <div className="space-y-3 rounded-xl bg-black/10 p-2 dark:bg-white/10">
+    <div className="space-y-3 rounded-xl bg-black/5 p-2 dark:bg-white/5">
       <div className="flex items-center justify-between">
-        <div className="truncate text-lg text-white">{countdown.name}</div>
+        <div className="truncate text-lg">{countdown.name}</div>
         <IconButton sx={{ p: 0.5 }} onClick={onDelete}>
           <Close fontSize="small" />
         </IconButton>
@@ -103,7 +103,7 @@ export function Timer({
         <div className="flex w-full gap-2">
           <div className="flex w-full flex-col items-center justify-center gap-2">
             <button
-              className="size-10 rounded-full text-lg font-semibold transition-colors duration-150 hover:bg-white/[0.08]"
+              className="size-10 rounded-full text-lg font-semibold text-black/65 transition-colors duration-150 hover:bg-black/[0.08] dark:text-white dark:hover:bg-white/[0.08]"
               onClick={() =>
                 setCountdown({
                   ...countdown,
@@ -117,7 +117,7 @@ export function Timer({
               <div>{"-1"}</div>
             </button>
             <button
-              className="size-10 rounded-full text-lg font-semibold transition-colors duration-150 hover:bg-white/[0.08]"
+              className="size-10 rounded-full text-lg font-semibold text-black/65 transition-colors duration-150 hover:bg-black/[0.08] dark:text-white dark:hover:bg-white/[0.08]"
               onClick={() =>
                 setCountdown({
                   ...countdown,
@@ -140,7 +140,7 @@ export function Timer({
           />
           <div className="flex w-full flex-col items-center justify-center gap-2">
             <button
-              className="size-10 rounded-full text-lg font-semibold transition-colors duration-150 hover:bg-white/[0.08]"
+              className="size-10 rounded-full text-lg font-semibold text-black/65 transition-colors duration-150 hover:bg-black/[0.08] dark:text-white dark:hover:bg-white/[0.08]"
               onClick={() =>
                 setCountdown({
                   ...countdown,
@@ -163,7 +163,7 @@ export function Timer({
               <div>{"+1"}</div>
             </button>
             <button
-              className="size-10 rounded-full text-lg font-semibold transition-colors duration-150 hover:bg-white/[0.08]"
+              className="size-10 rounded-full text-lg font-semibold text-black/65 transition-colors duration-150 hover:bg-black/[0.08] dark:text-white dark:hover:bg-white/[0.08]"
               onClick={() =>
                 setCountdown({
                   ...countdown,
