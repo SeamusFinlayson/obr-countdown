@@ -6,7 +6,7 @@ import { parseRoomMetadata, updateRoomCountdowns } from "./roomMetadataHelpers";
 import OBR, { type Metadata } from "@owlbear-rodeo/sdk";
 import { useTheme } from "@mui/material";
 
-const MAX_TIMERS = 4;
+const MAX_TIMERS = 1;
 
 function App() {
   const [countdowns, setCountdowns] = useState<Countdown[]>([]);

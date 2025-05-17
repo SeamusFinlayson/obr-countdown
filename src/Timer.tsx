@@ -13,8 +13,7 @@ import {
   timeToString,
   oneMinute,
 } from "./utils";
-import CircularProgress from "./components/CircularProgress";
-import OBR from "@owlbear-rodeo/sdk";
+import Fire from "./components/Fire";
 
 interface TimerState {
   now: number;
@@ -55,7 +54,7 @@ export function Timer({
   useEffect(() => {
     if (!finishedNotificationFired) {
       if (timerState.millisecondsRemaining <= 0) {
-        OBR.notification.show(`${countdown.name} Done`);
+        // OBR.notification.show(`${countdown.name} Done`);
         setFinishedNotificationFired(true);
       }
     } else {
@@ -92,7 +91,7 @@ export function Timer({
   const displayString = timeToString(displayTime);
 
   return (
-    <div className="space-y-3 rounded-xl bg-black/5 p-2 dark:bg-white/5">
+    <div className="space-y-3 rounded-xl">
       <div className="flex items-center justify-between">
         <div className="truncate text-lg">{countdown.name}</div>
         <IconButton sx={{ p: 0.5 }} onClick={onDelete}>
@@ -133,11 +132,12 @@ export function Timer({
               <div>{"-5"}</div>
             </button>
           </div>
-          <CircularProgress
+          {/* <CircularProgress
             progress={progress}
             transitionDuration={updatePeriod}
             text={displayString}
-          />
+          /> */}
+          <Fire progress={progress} text={displayString} />
           <div className="flex w-full flex-col items-center justify-center gap-2">
             <button
               className="size-10 rounded-full text-lg font-semibold text-black/65 transition-colors duration-150 hover:bg-black/[0.08] dark:text-white dark:hover:bg-white/[0.08]"

@@ -73,7 +73,7 @@ export function NewTimer({
                 hoursSuffix: "h ",
                 minutesSuffix: "m ",
                 secondsSuffix: "s ",
-                stringSuffix: "Timer",
+                stringSuffix: "Torch",
                 addLeadingZeroes: false,
                 omitZeroUnits: true,
               }),
@@ -82,10 +82,10 @@ export function NewTimer({
               pausedAt: null,
               addedTime: 0,
             });
-            setTime(DEFAULT_TIME);
+            // setTime(DEFAULT_TIME);
           }}
         >
-          Start Timer
+          Light Torch
         </Button>
       </div>
     </div>
