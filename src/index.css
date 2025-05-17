@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-mirage-50: #f6f7f9;
+  --color-mirage-100: #e6e7ec;
+  --color-mirage-200: #d6d8e1;
+  --color-mirage-300: #b3b7c6;
+  --color-mirage-400: #8990a7;
+  --color-mirage-500: #6b728c;
+  --color-mirage-600: #565b73;
+  --color-mirage-700: #464a5e;
+  --color-mirage-800: #3c3f50;
+  --color-mirage-900: #363844;
+  --color-mirage-950: #24252d;
+
+  --color-primary: #9966ff;
+  --color-primary-dark: #bb99ff;
+
+  --breakpoint-sm: 22rem;
+}
+
+button:hover {
+  cursor: pointer;
+}

@@ -1,0 +1,12 @@
+{
+  "name": "Countdown",
+  "version": "0.0.0",
+  "manifest_version": 1,
+  "action": {
+    "title": "Countdown",
+    "icon": "/vite.svg",
+    "popover": "/",
+    "height": 600,
+    "width": 270
+  }
+}
