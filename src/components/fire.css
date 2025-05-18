@@ -1,0 +1,51 @@
+.fire {
+  --fireColor: rgb(255, 80, 0);
+  --fireColorT: rgba(255, 80, 0, 0);
+  --dur: 2s;
+  --blur: 0.5em;
+  --fireRad: 3em;
+  --parts: attr(data-parts type(<number>));
+  --partSize: 2.5em;
+
+  /* font-size: 12px; */
+  filter: blur(var(--blur));
+  -webkit-filter: blur(var(--blur));
+  /* margin: 3em auto 0 auto; */
+  position: relative;
+  width: 5em;
+  height: 6em;
+}
+
+.fire-particle {
+  --animation-delay: attr(data-animation-delay type(<time>), 100ms);
+  --index: attr(data-index type(<number>), 0.5);
+
+  animation: rise var(--dur) ease-in infinite;
+  background-image: radial-gradient(var(--fireColor) 20%, var(--fireColorT) 70%);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  opacity: 0;
+  position: absolute;
+  bottom: 0;
+  width: var(--partSize);
+  height: var(--partSize);
+  animation-delay: calc(var(--animation-delay));
+  left: calc((100% - var(--partSize)) * (var(--index) + 0.5) / var(--parts));
+  animation-play-state: inherit;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(0) scale(1);
+  }
+
+  25% {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(-5em) scale(0);
+  }
+}

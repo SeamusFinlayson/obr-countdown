@@ -1,0 +1,53 @@
+.orb {
+  --fireColor: rgb(80, 110, 140);
+  --fireColorT: rgba(255, 80, 0, 0);
+  --dur: 2s;
+  --blur: 0.5em;
+  --fireRad: 3em;
+  --parts: attr(data-parts type(<number>));
+  --partSize: 2.5em;
+
+  /* font-size: 12px; */
+  filter: blur(var(--blur));
+  -webkit-filter: blur(var(--blur));
+  /* margin: 3em auto 0 auto; */
+  position: relative;
+  width: 5em;
+  height: 5em;
+}
+
+.orb-particle {
+  --animation-delay: attr(data-animation-delay type(<time>), 100ms);
+  --left: attr(data-left type(<number>), 0.5);
+  --bottom: attr(data-bottom type(<number>), 0.5);
+
+  animation: glow var(--dur) ease-out infinite;
+  background-image: radial-gradient(var(--fireColor) 20%, var(--fireColorT) 70%);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  opacity: 0;
+  position: absolute;
+  bottom: 0;
+  width: var(--partSize);
+  height: var(--partSize);
+  animation-delay: calc(var(--animation-delay));
+  left: calc((100% - var(--partSize)) * (var(--left) + 0.5));
+  bottom: calc((100% - var(--partSize)) * (var(--bottom) + 0.5));
+  animation-play-state: inherit;
+}
+
+@keyframes glow {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+
+  75% {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(1);
+  }
+}

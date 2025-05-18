@@ -6,7 +6,7 @@
     "title": "Countdown",
     "icon": "/timer.svg",
     "popover": "/",
-    "height": 600,
-    "width": 270
+    "height": 142,
+    "width": 250
   }
 }

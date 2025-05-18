@@ -39,14 +39,16 @@ export function timeToString(
     (time.hours === 0 ? "" : hoursString + format.hoursSuffix) +
     (time.minutes === 0 && (time.hours === 0 || format.omitZeroUnits)
       ? ""
-      : (format.addLeadingZeroes && minutesString.length === 1 && time.hours > 0
+      : (format.addLeadingZeroes &&
+        minutesString.length === 1 &&
+        time.hours !== 0
           ? "0" + minutesString
           : minutesString) + format.minutesSuffix) +
     (time.seconds === 0 && format.omitZeroUnits
       ? ""
       : (format.addLeadingZeroes &&
         secondsString.length === 1 &&
-        (time.minutes > 0 || time.hours > 0)
+        (time.minutes !== 0 || time.hours !== 0)
           ? "0" + secondsString
           : secondsString) + format.secondsSuffix) +
     format.stringSuffix
@@ -68,4 +70,22 @@ export function parseStringForNumber(
   }
 
   return newValue;
+}
+
+export function getRandomArray(length: number) {
+  const randomArray: number[] = [];
+  for (let i = 0; i < length; i++) {
+    randomArray.push(Math.random());
+  }
+  return randomArray;
+}
+
+export function getParticleCount(
+  progress: number,
+  initialParticles = 30,
+  timeConstant = 70,
+) {
+  const yScaling = initialParticles / (Math.pow(10, -100 / timeConstant) - 1);
+  const particles = yScaling * (Math.pow(10, -progress / timeConstant) - 1);
+  return Math.ceil(particles);
 }

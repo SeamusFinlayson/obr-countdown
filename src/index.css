@@ -19,8 +19,14 @@
   --color-primary-dark: #bb99ff;
 
   --breakpoint-sm: 22rem;
+
+  --default-font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }
 
 button:hover {
   cursor: pointer;
 }
+
+/* body {
+  background-color: rgba(0, 0, 0, 0.35);
+} */
