@@ -47,9 +47,9 @@ function App() {
 
   return (
     <>
-      <div ref={divRef} className={`${theme} p-4`}>
-        <div className="text-black dark:text-white">
-          <div className="space-y-4">
+      <div ref={divRef} className={`${theme} `}>
+        <div className="p-4 text-black dark:bg-black/35 dark:text-white">
+          <div>
             {countdowns.map((countdown) => (
               <Timer
                 key={countdown.id}
@@ -74,7 +74,11 @@ function App() {
                 }
               />
             ))}
-            {countdowns.length < MAX_TIMERS && (
+
+            <div
+              inert={countdowns.length >= MAX_TIMERS}
+              className="inert:hidden inert:p-0"
+            >
               <NewTimer
                 onCreate={(countdown) => {
                   setCountdowns((prev) => {
@@ -84,7 +88,7 @@ function App() {
                   });
                 }}
               />
-            )}
+            </div>
           </div>
         </div>
       </div>

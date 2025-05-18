@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { useState } from "react";
 import PartiallyControlledInput from "./components/PartiallyControlledInput";
 import type { Countdown, Time } from "./types";
@@ -21,10 +21,12 @@ export function NewTimer({
   onCreate: (countdown: Countdown) => void;
 }) {
   const [time, setTime] = useState<Time>(DEFAULT_TIME);
+  const [variant, setVariant] = useState<"FIRE" | "ORB">("FIRE");
 
   return (
     <div className="h-full w-full space-y-3 rounded-xl">
       {/* <div className="text-lg leading-8 text-white">{"New Timer"}</div> */}
+
       <div className="flex gap-2">
         <Input
           onConfirm={(target) =>
@@ -58,6 +60,21 @@ export function NewTimer({
         />
       </div>
 
+      <ToggleButtonGroup
+        fullWidth
+        size="small"
+        color="primary"
+        value={variant}
+        exclusive
+        onChange={(_event, value) => {
+          if (value) setVariant(value);
+        }}
+        aria-label="Platform"
+      >
+        <ToggleButton value="FIRE">Fire</ToggleButton>
+        <ToggleButton value="ORB">Orb</ToggleButton>
+      </ToggleButtonGroup>
+
       <div className="flex justify-center">
         <Button
           fullWidth
@@ -73,7 +90,7 @@ export function NewTimer({
                 hoursSuffix: "h ",
                 minutesSuffix: "m ",
                 secondsSuffix: "s ",
-                stringSuffix: "Torch",
+                stringSuffix: variant === "FIRE" ? "Torch" : "Light",
                 addLeadingZeroes: false,
                 omitZeroUnits: true,
               }),
@@ -81,11 +98,12 @@ export function NewTimer({
               start: Date.now(),
               pausedAt: null,
               addedTime: 0,
+              variant,
             });
             // setTime(DEFAULT_TIME);
           }}
         >
-          Light Torch
+          Start
         </Button>
       </div>
     </div>

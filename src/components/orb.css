@@ -1,5 +1,5 @@
-.fire {
-  --fireColor: rgb(255, 80, 0);
+.orb {
+  --fireColor: rgb(80, 110, 140);
   --fireColorT: rgba(255, 80, 0, 0);
   --dur: 2s;
   --blur: 0.5em;
@@ -13,14 +13,15 @@
   /* margin: 3em auto 0 auto; */
   position: relative;
   width: 5em;
-  height: 6em;
+  height: 5em;
 }
 
-.fire-particle {
+.orb-particle {
   --animation-delay: attr(data-animation-delay type(<time>), 100ms);
-  --index: attr(data-index type(<number>), 0.5);
+  --left: attr(data-left type(<number>), 0.5);
+  --bottom: attr(data-bottom type(<number>), 0.5);
 
-  animation: rise var(--dur) ease-in infinite;
+  animation: glow var(--dur) ease-out infinite;
   background-image: radial-gradient(var(--fireColor) 20%, var(--fireColorT) 70%);
   border-radius: 50%;
   mix-blend-mode: screen;
@@ -30,21 +31,22 @@
   width: var(--partSize);
   height: var(--partSize);
   animation-delay: calc(var(--animation-delay));
-  left: calc((100% - var(--partSize)) * (var(--index) + 0.5) / var(--parts));
+  left: calc((100% - var(--partSize)) * (var(--left) + 0.5));
+  bottom: calc((100% - var(--partSize)) * (var(--bottom) + 0.5));
 }
 
-@keyframes rise {
+@keyframes glow {
   from {
     opacity: 0;
-    transform: translateY(0) scale(1);
+    transform: scale(0);
   }
 
-  25% {
+  75% {
     opacity: 1;
   }
 
   to {
     opacity: 0;
-    transform: translateY(-5em) scale(0);
+    transform: scale(1);
   }
 }

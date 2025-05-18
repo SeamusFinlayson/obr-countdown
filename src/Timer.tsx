@@ -14,6 +14,8 @@ import {
   oneMinute,
 } from "./utils";
 import Fire from "./components/Fire";
+import Orb from "./components/Orb";
+import OBR from "@owlbear-rodeo/sdk";
 
 interface TimerState {
   now: number;
@@ -48,21 +50,15 @@ export function Timer({
     getTimerState(Date.now(), countdown),
   );
 
-  const [finishedNotificationFired, setFinishedNotificationFired] =
-    useState(false);
-
-  useEffect(() => {
-    if (!finishedNotificationFired) {
-      if (timerState.millisecondsRemaining <= 0) {
-        // OBR.notification.show(`${countdown.name} Done`);
-        setFinishedNotificationFired(true);
-      }
-    } else {
-      if (timerState.millisecondsRemaining > 0) {
-        setFinishedNotificationFired(false);
-      }
-    }
-  }, [timerState, countdown, finishedNotificationFired]);
+  if (timerState.millisecondsRemaining <= 0) {
+    OBR.action.getBadgeText().then((text) => {
+      if (!text) OBR.action.setBadgeText("");
+    });
+  } else {
+    OBR.action.getBadgeText().then((text) => {
+      if (text !== undefined) OBR.action.setBadgeText(undefined);
+    });
+  }
 
   const updatePeriod = Math.max(Math.min(countdown.duration / 200, 1000), 200); // Update time between 1 and 5Hz
 
@@ -94,7 +90,13 @@ export function Timer({
     <div className="space-y-3 rounded-xl">
       <div className="flex items-center justify-between">
         <div className="truncate text-lg">{countdown.name}</div>
-        <IconButton sx={{ p: 0.5 }} onClick={onDelete}>
+        <IconButton
+          sx={{ p: 0.5 }}
+          onClick={() => {
+            OBR.action.setBadgeText(undefined);
+            onDelete();
+          }}
+        >
           <Close fontSize="small" />
         </IconButton>
       </div>
@@ -137,7 +139,11 @@ export function Timer({
             transitionDuration={updatePeriod}
             text={displayString}
           /> */}
-          <Fire progress={progress} text={displayString} />
+          {countdown.variant === "FIRE" ? (
+            <Fire progress={progress} text={displayString} />
+          ) : (
+            <Orb progress={progress} text={displayString} />
+          )}
           <div className="flex w-full flex-col items-center justify-center gap-2">
             <button
               className="size-10 rounded-full text-lg font-semibold text-black/65 transition-colors duration-150 hover:bg-black/[0.08] dark:text-white dark:hover:bg-white/[0.08]"

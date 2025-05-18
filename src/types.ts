@@ -5,6 +5,7 @@ export interface Countdown {
   start: number;
   pausedAt: number | null;
   addedTime: number;
+  variant: "FIRE" | "ORB";
 }
 
 export interface Time {

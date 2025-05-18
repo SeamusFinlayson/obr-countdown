@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
-import "./fire.css";
+import "./orb.css";
+
+const MAXIMUM_PARTICLES = 30;
 
 const getRandomArray = (length: number) => {
   const randomArray: number[] = [];
@@ -10,15 +12,22 @@ const getRandomArray = (length: number) => {
 };
 
 const getParticles = (particleCount: number, randomArray: number[]) => {
-  if (randomArray.length < particleCount)
-    throw new Error("randomArray to short");
   const particles: React.ReactNode[] = [];
   for (let i = 0; i < particleCount; i++) {
     particles.push(
       <div
-        key={"fire" + i}
-        className="fire-particle"
-        data-index={i}
+        key={"orb" + i}
+        className="orb-particle"
+        data-left={
+          (particleCount / MAXIMUM_PARTICLES) *
+          (0.7 + 0.2 * Math.sin(100 * i)) *
+          Math.cos(i)
+        }
+        data-bottom={
+          (particleCount / MAXIMUM_PARTICLES) *
+          (0.7 + 0.2 * Math.sin(100 * i)) *
+          Math.sin(i)
+        }
         data-animation-delay={`${randomArray[i] * 2}s`}
       />,
     );
@@ -26,9 +35,7 @@ const getParticles = (particleCount: number, randomArray: number[]) => {
   return particles;
 };
 
-const MAXIMUM_PARTICLES = 30;
-
-export default function Fire({
+export default function Orb({
   progress,
   text,
 }: {
@@ -57,7 +64,7 @@ export default function Fire({
       {/* <div className="z-10 col-start-1 row-start-1 h-4 w-8 bg-black blur-sm"></div> */}
       <div className="z-0 col-start-1 row-start-1">
         <div className="flex justify-center">
-          <div className="fire" data-parts={particleCount}>
+          <div className="orb" data-parts={[particleCount]}>
             {particles}
           </div>
         </div>
