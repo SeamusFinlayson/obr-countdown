@@ -202,27 +202,27 @@ export function Timer({
                   <VisibilityRounded />
                 )}
               </IconButton>
-              <IconButton
-                disabled={displayMillisecondsRemaining <= 0}
-                onClick={() => {
-                  if (countdown.pausedAt)
-                    setCountdown({
-                      ...countdown,
-                      pausedAt: null,
-                      addedTime:
-                        countdown.addedTime + (Date.now() - countdown.pausedAt),
-                    });
-                  else setCountdown({ ...countdown, pausedAt: Date.now() });
-                }}
-              >
-                {countdown.pausedAt || timerState.millisecondsRemaining <= 0 ? (
-                  <PlayArrowRounded />
-                ) : (
-                  <PauseRounded />
-                )}
-              </IconButton>
             </>
           )}
+          <IconButton
+            disabled={displayMillisecondsRemaining <= 0}
+            onClick={() => {
+              if (countdown.pausedAt)
+                setCountdown({
+                  ...countdown,
+                  pausedAt: null,
+                  addedTime:
+                    countdown.addedTime + (Date.now() - countdown.pausedAt),
+                });
+              else setCountdown({ ...countdown, pausedAt: Date.now() });
+            }}
+          >
+            {countdown.pausedAt || timerState.millisecondsRemaining <= 0 ? (
+              <PlayArrowRounded />
+            ) : (
+              <PauseRounded />
+            )}
+          </IconButton>
           {(playerRole === "GM" || timerState.millisecondsRemaining <= 0) && (
             <IconButton
               onClick={() =>
