@@ -4,11 +4,7 @@ import { getParticleCount, getRandomArray } from "../utils";
 
 const MAXIMUM_PARTICLES = 30;
 
-const getParticles = (
-  particleCount: number,
-  randomArray: number[],
-  paused: boolean,
-) => {
+const getParticles = (particleCount: number, randomArray: number[]) => {
   const particles: React.ReactNode[] = [];
   for (let i = 0; i < particleCount; i++) {
     particles.push(
@@ -26,7 +22,6 @@ const getParticles = (
           Math.sin(i)
         }
         data-animation-delay={`${randomArray[i] * 2}s`}
-        style={{ animationPlayState: paused ? "paused" : "running" }}
       />,
     );
   }
@@ -52,11 +47,13 @@ export default function Orb({
   }, [particleCount]);
 
   const [particles, setParticles] = useState(
-    getParticles(particleCount, randomArray, paused),
+    getParticles(particleCount, randomArray),
   );
   useEffect(() => {
-    setParticles(getParticles(particleCount, randomArray, paused));
-  }, [particleCount, randomArray, paused]);
+    if (!paused || particleCount < particles.length) {
+      setParticles(getParticles(particleCount, randomArray));
+    }
+  }, [particleCount, randomArray, paused, particles.length]);
 
   return (
     <div className="grid place-items-center">
@@ -64,7 +61,11 @@ export default function Orb({
       {/* <div className="z-10 col-start-1 row-start-1 h-4 w-8 bg-black blur-sm"></div> */}
       <div className="z-0 col-start-1 row-start-1">
         <div className="flex justify-center">
-          <div className="orb" data-parts={[particleCount]}>
+          <div
+            className="orb"
+            data-parts={particles.length}
+            style={{ animationPlayState: paused ? "paused" : "running" }}
+          >
             {particles}
           </div>
         </div>

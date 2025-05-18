@@ -33,6 +33,7 @@
   animation-delay: calc(var(--animation-delay));
   left: calc((100% - var(--partSize)) * (var(--left) + 0.5));
   bottom: calc((100% - var(--partSize)) * (var(--bottom) + 0.5));
+  animation-play-state: inherit;
 }
 
 @keyframes glow {

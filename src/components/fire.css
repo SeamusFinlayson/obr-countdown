@@ -31,6 +31,7 @@
   height: var(--partSize);
   animation-delay: calc(var(--animation-delay));
   left: calc((100% - var(--partSize)) * (var(--index) + 0.5) / var(--parts));
+  animation-play-state: inherit;
 }
 
 @keyframes rise {

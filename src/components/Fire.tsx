@@ -10,11 +10,7 @@ const getRandomArray = (length: number) => {
   return randomArray;
 };
 
-const getParticles = (
-  particleCount: number,
-  randomArray: number[],
-  paused: boolean,
-) => {
+const getParticles = (particleCount: number, randomArray: number[]) => {
   if (randomArray.length < particleCount)
     throw new Error("randomArray to short");
   const particles: React.ReactNode[] = [];
@@ -25,7 +21,6 @@ const getParticles = (
         className="fire-particle"
         data-index={i}
         data-animation-delay={`${randomArray[i] * 2}s`}
-        style={{ animationPlayState: paused ? "paused" : "running" }}
       />,
     );
   }
@@ -53,11 +48,13 @@ export default function Fire({
   }, [particleCount]);
 
   const [particles, setParticles] = useState(
-    getParticles(particleCount, randomArray, paused),
+    getParticles(particleCount, randomArray),
   );
   useEffect(() => {
-    setParticles(getParticles(particleCount, randomArray, paused));
-  }, [particleCount, paused, randomArray]);
+    if (!paused || particleCount < particles.length) {
+      setParticles(getParticles(particleCount, randomArray));
+    }
+  }, [particleCount, particles.length, paused, randomArray]);
 
   return (
     <div className="grid place-items-center">
@@ -65,7 +62,11 @@ export default function Fire({
       {/* <div className="z-10 col-start-1 row-start-1 h-4 w-8 bg-black blur-sm"></div> */}
       <div className="z-0 col-start-1 row-start-1">
         <div className="flex justify-center">
-          <div className="fire" data-parts={particleCount}>
+          <div
+            className="fire"
+            data-parts={particles.length}
+            style={{ animationPlayState: paused ? "paused" : "running" }}
+          >
             {particles}
           </div>
         </div>
