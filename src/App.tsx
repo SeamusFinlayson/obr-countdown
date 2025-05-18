@@ -48,7 +48,7 @@ function App() {
   return (
     <>
       <div ref={divRef} className={`${theme} `}>
-        <div className="p-4 text-black dark:bg-black/35 dark:text-white">
+        <div className="text-black dark:bg-black/35 dark:text-white">
           <div>
             {countdowns.map((countdown) => (
               <Timer

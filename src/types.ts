@@ -1,3 +1,5 @@
+export type TimerVariant = "TIMER" | "ORB" | "FIRE";
+
 export interface Countdown {
   id: string;
   name: string;
@@ -5,7 +7,8 @@ export interface Countdown {
   start: number;
   pausedAt: number | null;
   addedTime: number;
-  variant: "FIRE" | "ORB";
+  variant: TimerVariant;
+  hideTimeText: boolean;
 }
 
 export interface Time {

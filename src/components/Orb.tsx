@@ -1,17 +1,14 @@
 import { useEffect, useState } from "react";
 import "./orb.css";
+import { getParticleCount, getRandomArray } from "../utils";
 
 const MAXIMUM_PARTICLES = 30;
 
-const getRandomArray = (length: number) => {
-  const randomArray: number[] = [];
-  for (let i = 0; i < length; i++) {
-    randomArray.push(Math.random());
-  }
-  return randomArray;
-};
-
-const getParticles = (particleCount: number, randomArray: number[]) => {
+const getParticles = (
+  particleCount: number,
+  randomArray: number[],
+  paused: boolean,
+) => {
   const particles: React.ReactNode[] = [];
   for (let i = 0; i < particleCount; i++) {
     particles.push(
@@ -29,6 +26,7 @@ const getParticles = (particleCount: number, randomArray: number[]) => {
           Math.sin(i)
         }
         data-animation-delay={`${randomArray[i] * 2}s`}
+        style={{ animationPlayState: paused ? "paused" : "running" }}
       />,
     );
   }
@@ -38,11 +36,13 @@ const getParticles = (particleCount: number, randomArray: number[]) => {
 export default function Orb({
   progress,
   text,
+  paused,
 }: {
   progress: number;
   text: string;
+  paused: boolean;
 }) {
-  const particleCount = Math.ceil((progress / 100) * MAXIMUM_PARTICLES);
+  const particleCount = getParticleCount(progress);
 
   const [randomArray, setRandomArray] = useState(
     getRandomArray(MAXIMUM_PARTICLES),
@@ -52,11 +52,11 @@ export default function Orb({
   }, [particleCount]);
 
   const [particles, setParticles] = useState(
-    getParticles(particleCount, randomArray),
+    getParticles(particleCount, randomArray, paused),
   );
   useEffect(() => {
-    setParticles(getParticles(particleCount, randomArray));
-  }, [particleCount, randomArray]);
+    setParticles(getParticles(particleCount, randomArray, paused));
+  }, [particleCount, randomArray, paused]);
 
   return (
     <div className="grid place-items-center">

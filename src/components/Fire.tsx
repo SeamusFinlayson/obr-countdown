@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./fire.css";
+import { getParticleCount } from "../utils";
 
 const getRandomArray = (length: number) => {
   const randomArray: number[] = [];
@@ -9,7 +10,11 @@ const getRandomArray = (length: number) => {
   return randomArray;
 };
 
-const getParticles = (particleCount: number, randomArray: number[]) => {
+const getParticles = (
+  particleCount: number,
+  randomArray: number[],
+  paused: boolean,
+) => {
   if (randomArray.length < particleCount)
     throw new Error("randomArray to short");
   const particles: React.ReactNode[] = [];
@@ -20,6 +25,7 @@ const getParticles = (particleCount: number, randomArray: number[]) => {
         className="fire-particle"
         data-index={i}
         data-animation-delay={`${randomArray[i] * 2}s`}
+        style={{ animationPlayState: paused ? "paused" : "running" }}
       />,
     );
   }
@@ -31,11 +37,13 @@ const MAXIMUM_PARTICLES = 30;
 export default function Fire({
   progress,
   text,
+  paused,
 }: {
   progress: number;
   text: string;
+  paused: boolean;
 }) {
-  const particleCount = Math.ceil((progress / 100) * MAXIMUM_PARTICLES);
+  const particleCount = getParticleCount(progress);
 
   const [randomArray, setRandomArray] = useState(
     getRandomArray(MAXIMUM_PARTICLES),
@@ -45,11 +53,11 @@ export default function Fire({
   }, [particleCount]);
 
   const [particles, setParticles] = useState(
-    getParticles(particleCount, randomArray),
+    getParticles(particleCount, randomArray, paused),
   );
   useEffect(() => {
-    setParticles(getParticles(particleCount, randomArray));
-  }, [particleCount, randomArray]);
+    setParticles(getParticles(particleCount, randomArray, paused));
+  }, [particleCount, paused, randomArray]);
 
   return (
     <div className="grid place-items-center">

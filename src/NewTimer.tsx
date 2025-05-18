@@ -1,13 +1,14 @@
-import { Button, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import { useState } from "react";
 import PartiallyControlledInput from "./components/PartiallyControlledInput";
-import type { Countdown, Time } from "./types";
+import type { Countdown, Time, TimerVariant } from "./types";
 import {
   parseStringForNumber,
   timeToString,
   timeToMilliseconds,
   millisecondsToTime,
 } from "./utils";
+import { ChevronLeftRounded, ChevronRightRounded } from "@mui/icons-material";
 
 const DEFAULT_TIME = {
   hours: 0,
@@ -15,17 +16,41 @@ const DEFAULT_TIME = {
   seconds: 0,
 };
 
+const timerVariants: TimerVariant[] = ["FIRE", "ORB", "TIMER"];
+
 export function NewTimer({
   onCreate: onCreate,
 }: {
   onCreate: (countdown: Countdown) => void;
 }) {
   const [time, setTime] = useState<Time>(DEFAULT_TIME);
-  const [variant, setVariant] = useState<"FIRE" | "ORB">("FIRE");
+  const [variant, setVariant] = useState(0);
 
   return (
-    <div className="h-full w-full space-y-3 rounded-xl">
+    <div className="h-full w-full space-y-4 rounded-xl p-4">
       {/* <div className="text-lg leading-8 text-white">{"New Timer"}</div> */}
+
+      <div className="mb-2.5 flex items-stretch gap-2">
+        <IconButton
+          size="small"
+          onClick={() =>
+            setVariant(variant > 0 ? variant - 1 : timerVariants.length - 1)
+          }
+        >
+          <ChevronLeftRounded sx={{ fontSize: 28 }} />
+        </IconButton>
+        <div className="div flex w-full items-center justify-center text-base">
+          {timerVariants[variant]}
+        </div>
+        <IconButton
+          size="small"
+          onClick={() =>
+            setVariant(variant < timerVariants.length - 1 ? variant + 1 : 0)
+          }
+        >
+          <ChevronRightRounded sx={{ fontSize: 28 }} />
+        </IconButton>
+      </div>
 
       <div className="flex gap-2">
         <Input
@@ -60,21 +85,6 @@ export function NewTimer({
         />
       </div>
 
-      <ToggleButtonGroup
-        fullWidth
-        size="small"
-        color="primary"
-        value={variant}
-        exclusive
-        onChange={(_event, value) => {
-          if (value) setVariant(value);
-        }}
-        aria-label="Platform"
-      >
-        <ToggleButton value="FIRE">Fire</ToggleButton>
-        <ToggleButton value="ORB">Orb</ToggleButton>
-      </ToggleButtonGroup>
-
       <div className="flex justify-center">
         <Button
           fullWidth
@@ -90,7 +100,7 @@ export function NewTimer({
                 hoursSuffix: "h ",
                 minutesSuffix: "m ",
                 secondsSuffix: "s ",
-                stringSuffix: variant === "FIRE" ? "Torch" : "Light",
+                stringSuffix: ["Torch", "Light", "Timer"][variant],
                 addLeadingZeroes: false,
                 omitZeroUnits: true,
               }),
@@ -98,7 +108,8 @@ export function NewTimer({
               start: Date.now(),
               pausedAt: null,
               addedTime: 0,
-              variant,
+              variant: timerVariants[variant],
+              hideTimeText: false,
             });
             // setTime(DEFAULT_TIME);
           }}
