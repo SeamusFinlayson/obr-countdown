@@ -1,7 +1,10 @@
 {
   "name": "Countdown",
-  "version": "0.0.0",
+  "description": "A persistent timer with particle effects that change as the countdown progresses",
+  "author": "Seamus Finlayson",
+  "version": "1.0.0",
   "manifest_version": 1,
+  "icon": "/timer-logo.svg",
   "action": {
     "title": "Countdown",
     "icon": "/timer.svg",
